@@ -172,6 +172,19 @@
 
             return "#"+RR+GG+BB;
         }
+        function saveColorPreference(color) {
+            localStorage.setItem('clockColor', color);
+        }
+
+        function loadColorPreference() {
+            const savedColor = localStorage.getItem('clockColor');
+            if (savedColor) {
+                setBackgroundColor(savedColor);
+                colorSelect.value = savedColor;
+            } else {
+                setBackgroundColor('#F1F1EF');
+            }
+        }
 
         colorSelect.addEventListener('change', () => {
             const selectedColor = colorSelect.value;
