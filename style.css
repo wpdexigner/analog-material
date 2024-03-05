@@ -1,10 +1,10 @@
 <style>
-body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  background-color: teal;
+        body {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          min-height: 100vh;
+          background-color: teal;
 }
 
 .clock{
@@ -89,4 +89,4 @@ height: 332px;
     margin-top: -6px;
     border-radius: 6px;
 }
-    </style>
+</style>
