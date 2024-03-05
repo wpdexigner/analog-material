@@ -1,3 +1,4 @@
+<style>
 body {
   display: flex;
   justify-content: center;
@@ -88,3 +89,4 @@ height: 332px;
     margin-top: -6px;
     border-radius: 6px;
 }
+    </style>
