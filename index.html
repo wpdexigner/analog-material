@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Material Analog Clock</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         body {
       display: flex;
@@ -48,7 +49,7 @@
       width: 6px;
       border-radius: 2px;
       background-color: #000;
-      margin-left: -1px;
+      margin-left: -3px;
     }
 
     .minute-hand {
@@ -67,11 +68,11 @@
     }
 
     .twelve {
-      top: 26px;
+      top: 16px;
     }
 
     .six {
-      bottom: 26px;
+      bottom: 16px;
     }
 
     .twelve, .six {
@@ -96,10 +97,72 @@
     }
 
     #colorSelect {
-      position: absolute;
+      position: center;
       top: 2%;
       left: 45%;
     }
+
+      .settings-btn {
+            color: #787774;
+            position: fixed;
+            bottom: 20px;
+        }
+        
+       #settings-btn:hover {
+            cursor: pointer;
+            transform: scale(1.2);
+        }
+
+        #settings-modal {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            width: 200px;
+            align-items: center;
+            justify-content: center;
+            background-color: #f7f6f3;
+            padding: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+        }
+
+        .setting-option {
+            text-align: center;
+            align-item: center;
+            margin-bottom: 10px;
+        }
+
+        #setting-wrapper {
+            text-align: center;
+            flex-direction: column;
+            display: flex;
+            align-item: center;
+        }
+
+        .close-btn {
+            color: #787774;
+            float: right;
+            font-size: 30px;
+            margin-top: -30px;
+            margin-right: -20px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        #colorSelect {
+            width: 100%;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
@@ -112,39 +175,55 @@
         <div class="twelve"></div>
         <div class="six"></div>
     </div>
-    <select id="colorSelect">
-        <option value="#F1F1EF">Default</option>
-        <option value="#FDEBEC">Red</option>
-        <option value="#FBF3DB">Yellow</option>
-        <option value="#EDF3EC">Green</option>
-        <option value="#E7F3F8">Blue</option>
-        <option value="#F4EEEE">Brown</option>
-        <option value="#FAF1F5">Pink</option>
-        <option value="#F6F3F9">Purple</option>
-        <option value="#FAEBDD">Orange</option>
-    </select>
+    <i class="fas fa-cog settings-btn" id="settings-btn"></i>
+
+    <div id="settings-modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <div id="setting-wrapper">
+                <div class="setting-option">
+                    <label for="colorSelect">Select Clock Color:</label>
+                    <select id="colorSelect">
+                        <option value="#F1F1EF">Default</option>
+                        <option value="#FDEBEC">Red</option>
+                        <option value="#FBF3DB">Yellow</option>
+                        <option value="#EDF3EC">Green</option>
+                        <option value="#E7F3F8">Blue</option>
+                        <option value="#F4EEEE">Brown</option>
+                        <option value="#FAF1F5">Pink</option>
+                        <option value="#F6F3F9">Purple</option>
+                        <option value="#FAEBDD">Orange</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         const hourHand = document.querySelector('.hour-hand');
         const minuteHand = document.querySelector('.minute-hand');
         const secondHand = document.querySelector('.second-hand');
         const colorSelect = document.querySelector('#colorSelect');
         const clock = document.querySelector('.clock');
+        const settingsBtn = document.querySelector('#settings-btn');
+        const settingsModal = document.querySelector('#settings-modal');
+        const closeBtn = document.querySelector('.close-btn');
 
         function updateClock() {
             const now = new Date();
-      const hours = now.getHours();
-      const minutes = now.getMinutes();
-      const seconds = now.getSeconds();
+            const hours = now.getHours();
+            const minutes = now.getMinutes();
+            const seconds = now.getSeconds();
 
-      const hoursDegrees = (hours / 12) * 360 + (minutes / 60) * 30;
-      const minutesDegrees = (minutes / 60) * 360;
-      const secondsDegrees = (seconds / 60) * 360;
+            const hoursDegrees = (hours / 12) * 360 + (minutes / 60) * 30;
+            const minutesDegrees = (minutes / 60) * 360;
+            const secondsDegrees = (seconds / 60) * 360;
 
-      hourHand.style.transform = `rotate(${hoursDegrees}deg)`;
-      minuteHand.style.transform = `rotate(${minutesDegrees}deg)`;
-      secondHand.style.transform = `rotate(${secondsDegrees}deg)`;
+            hourHand.style.transform = `rotate(${hoursDegrees}deg)`;
+            minuteHand.style.transform = `rotate(${minutesDegrees}deg)`;
+            secondHand.style.transform = `rotate(${secondsDegrees}deg)`;
 
-      requestAnimationFrame(updateClock);
+            requestAnimationFrame(updateClock);
         }
 
         function setBackgroundColor(color) {
@@ -186,6 +265,20 @@
                 setBackgroundColor('#F1F1EF');
             }
         }
+
+        settingsBtn.addEventListener('click', () => {
+            settingsModal.style.display = 'flex';
+        });
+
+        closeBtn.addEventListener('click', () => {
+            settingsModal.style.display = 'none';
+        });
+
+        window.addEventListener('click', (event) => {
+            if (event.target === settingsModal) {
+                settingsModal.style.display = 'none';
+            }
+        });
 
         colorSelect.addEventListener('change', () => {
             const selectedColor = colorSelect.value;
