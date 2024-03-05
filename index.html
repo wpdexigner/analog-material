@@ -11,8 +11,7 @@
       align-items: center;
       height: 100vh;
       overflow-x: hidden;
-      overflow-y: hidden;
-      background-color: #FFFFFF; /* Default background color */
+      overflow-y: hidden;      background-color: #FFFFFF; /* Default background color */
       flex-direction: column;
     }
 
@@ -132,7 +131,7 @@
         const clock = document.querySelector('.clock');
 
         function updateClock() {
-           const now = new Date();
+            const now = new Date();
       const hours = now.getHours();
       const minutes = now.getMinutes();
       const seconds = now.getSeconds();
@@ -151,6 +150,7 @@
         function setBackgroundColor(color) {
             const gradient = `linear-gradient(135deg, ${color} 0%, ${color} 50%, ${shadeColor(color, -10)} 50%, ${shadeColor(color, -10)} 100%)`;
             clock.style.background = gradient;
+            saveColorPreference(color);
         }
 
         function shadeColor(color, percent) {
@@ -172,6 +172,7 @@
 
             return "#"+RR+GG+BB;
         }
+
         function saveColorPreference(color) {
             localStorage.setItem('clockColor', color);
         }
